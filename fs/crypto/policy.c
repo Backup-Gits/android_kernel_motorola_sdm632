@@ -107,8 +107,12 @@ int fscrypt_ioctl_set_policy(struct file *filp, const void __user *arg)
 		printk(KERN_WARNING
 		       "%s: Policy inconsistent with encryption context\n",
 		       __func__);
+
 		ret = -EINVAL;
 >>>>>>> 3326d00ca023... fscrypto: move ioctl processing more fully into common code
+
+		ret = -EEXIST;
+>>>>>>> a9b9c9988de5... fscrypt: use EEXIST when file already uses different policy
 	}
 
 	inode_unlock(inode);
