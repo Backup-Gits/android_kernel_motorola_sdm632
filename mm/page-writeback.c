@@ -2733,6 +2733,8 @@ int test_clear_page_writeback(struct page *page)
 		ret = TestClearPageWriteback(page);
 	}
 
+
+>>>>>>> dee92931fb17... mm: memcontrol: fix NULL pointer crash in test_clear_page_writeback()
 	/*
 	 * NOTE: Page might be free now! Writeback doesn't hold a page
 	 * reference on its own, it relies on truncation to wait for
@@ -2740,7 +2742,12 @@ int test_clear_page_writeback(struct page *page)
 	 * page state that is static across allocation cycles.
 	 */
 	if (ret) {
+
 		mem_cgroup_dec_stat(memcg, MEM_CGROUP_STAT_WRITEBACK);
+
+		__mem_cgroup_update_page_stat(page, memcg,
+					      MEM_CGROUP_STAT_WRITEBACK, -1);
+>>>>>>> dee92931fb17... mm: memcontrol: fix NULL pointer crash in test_clear_page_writeback()
 		dec_node_page_state(page, NR_WRITEBACK);
 		dec_zone_page_state(page, NR_ZONE_WRITE_PENDING);
 		inc_node_page_state(page, NR_WRITTEN);
