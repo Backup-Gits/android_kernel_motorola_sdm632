@@ -550,8 +550,13 @@ static void __init map_kernel(pgd_t *pgd)
 		 * entry instead.
 		 */
 		BUG_ON(!IS_ENABLED(CONFIG_ARM64_16K_PAGES));
+
 		set_pud(pud_set_fixmap_offset(pgd, FIXADDR_START),
 			__pud(__pa_symbol(bm_pmd) | PUD_TYPE_TABLE));
+
+		pud_populate(&init_mm, pud_set_fixmap_offset(pgd, FIXADDR_START),
+			     lm_alias(bm_pmd));
+>>>>>>> 17c413903026... arm64: don't open code page table entry creation
 		pud_clear_fixmap();
 	} else {
 		BUG();
@@ -666,7 +671,7 @@ int __meminit vmemmap_populate(unsigned long start, unsigned long end, int node)
 			if (!p)
 				return -ENOMEM;
 
-			set_pmd(pmd, __pmd(__pa(p) | PROT_SECT_NORMAL));
+			pmd_set_huge(pmd, __pa(p), __pgprot(PROT_SECT_NORMAL));
 		} else
 			vmemmap_verify((pte_t *)pmd, node, addr, next);
 	} while (addr = next, addr != end);
@@ -862,6 +867,7 @@ int pud_set_huge(pud_t *pud, phys_addr_t phys, pgprot_t prot)
 {
 	pgprot_t sect_prot = __pgprot(PUD_TYPE_SECT |
 					pgprot_val(mk_sect_prot(prot)));
+
 	pud_t new_pud = pfn_pud(__phys_to_pfn(phys), sect_prot);
 
 	/* Only allow permission changes for now */
@@ -871,6 +877,10 @@ int pud_set_huge(pud_t *pud, phys_addr_t phys, pgprot_t prot)
 
 	BUG_ON(phys & ~PUD_MASK);
 	set_pud(pud, new_pud);
+
+	BUG_ON(phys & ~PUD_MASK);
+	set_pud(pud, pfn_pud(__phys_to_pfn(phys), sect_prot));
+>>>>>>> 17c413903026... arm64: don't open code page table entry creation
 	return 1;
 }
 
@@ -878,6 +888,7 @@ int pmd_set_huge(pmd_t *pmd, phys_addr_t phys, pgprot_t prot)
 {
 	pgprot_t sect_prot = __pgprot(PMD_TYPE_SECT |
 					pgprot_val(mk_sect_prot(prot)));
+
 	pmd_t new_pmd = pfn_pmd(__phys_to_pfn(phys), sect_prot);
 
 	/* Only allow permission changes for now */
@@ -887,6 +898,10 @@ int pmd_set_huge(pmd_t *pmd, phys_addr_t phys, pgprot_t prot)
 
 	BUG_ON(phys & ~PMD_MASK);
 	set_pmd(pmd, new_pmd);
+
+	BUG_ON(phys & ~PMD_MASK);
+	set_pmd(pmd, pfn_pmd(__phys_to_pfn(phys), sect_prot));
+>>>>>>> 17c413903026... arm64: don't open code page table entry creation
 	return 1;
 }
 
