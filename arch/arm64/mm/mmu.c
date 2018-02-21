@@ -878,6 +878,11 @@ int pud_set_huge(pud_t *pudp, phys_addr_t phys, pgprot_t prot)
 	BUG_ON(phys & ~PUD_MASK);
 	set_pud(pud, new_pud);
 
+	/* ioremap_page_range doesn't honour BBM */
+	if (pud_present(READ_ONCE(*pudp)))
+		return 0;
+
+>>>>>>> 4f45a0a17035... arm64: Enforce BBM for huge IO/VMAP mappings
 	BUG_ON(phys & ~PUD_MASK);
 	set_pud(pud, pfn_pud(__phys_to_pfn(phys), sect_prot));
 >>>>>>> 17c413903026... arm64: don't open code page table entry creation
@@ -902,6 +907,11 @@ int pmd_set_huge(pmd_t *pmdp, phys_addr_t phys, pgprot_t prot)
 	BUG_ON(phys & ~PMD_MASK);
 	set_pmd(pmd, new_pmd);
 
+	/* ioremap_page_range doesn't honour BBM */
+	if (pmd_present(READ_ONCE(*pmdp)))
+		return 0;
+
+>>>>>>> 4f45a0a17035... arm64: Enforce BBM for huge IO/VMAP mappings
 	BUG_ON(phys & ~PMD_MASK);
 	set_pmd(pmd, pfn_pmd(__phys_to_pfn(phys), sect_prot));
 >>>>>>> 17c413903026... arm64: don't open code page table entry creation
