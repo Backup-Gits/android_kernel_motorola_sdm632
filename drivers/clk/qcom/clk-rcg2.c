@@ -128,8 +128,13 @@ static int update_config(struct clk_rcg2 *rcg)
 		udelay(1);
 	}
 
+
 	WARN(1, "clk: %s: rcg didn't update its configuration.", name);
 	return 0;
+
+	WARN(1, "%s: rcg didn't update its configuration.", name);
+	return -EBUSY;
+>>>>>>> fcd93da7fe09... clk: qcom: rcg: Return failure for RCG update
 }
 
 static int clk_rcg2_set_parent(struct clk_hw *hw, u8 index)
