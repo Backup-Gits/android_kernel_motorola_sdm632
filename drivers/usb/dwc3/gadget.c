@@ -3924,6 +3924,8 @@ int dwc3_gadget_init(struct dwc3 *dwc)
 	dwc->gadget.is_otg		= dwc->dr_mode == USB_DR_MODE_OTG;
 	dwc->gadget.l1_supported	= !dwc->usb2_l1_disable;
 
+>>>>>>> 20fefd823400... usb: dwc3: don't set gadget->is_otg flag
+
 	/*
 	 * FIXME We might be setting max_speed to <SUPER, however versions
 	 * <2.20a of dwc3 have an issue with metastability (documented
