@@ -559,6 +559,9 @@ drm_property_create_blob(struct drm_device *dev, size_t length,
 
 	if (!length || length > MAX_BLOB_PROP_SIZE -
 				sizeof(struct drm_property_blob))
+
+	if (!length || length > INT_MAX - sizeof(struct drm_property_blob))
+>>>>>>> a09dabbf416b... drm: limit to INT_MAX in create_blob ioctl
 		return ERR_PTR(-EINVAL);
 
 	blob = vzalloc(sizeof(struct drm_property_blob)+length);
