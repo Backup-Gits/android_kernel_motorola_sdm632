@@ -1092,6 +1092,10 @@ int dwc3_core_pre_init(struct dwc3 *dwc)
 	}
 
 	return ret;
+
+	/* de-assert DRVVBUS for HOST and OTG mode */
+	dwc3_set_mode(dwc, DWC3_GCTL_PRTCAP_DEVICE);
+>>>>>>> 9b6c072270b9... usb: dwc3: turn off VBUS when leaving host mode
 }
 
 #define DWC3_ALIGN_MASK		(16 - 1)
