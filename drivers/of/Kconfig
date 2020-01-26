@@ -133,4 +133,9 @@ config OF_BATTERYDATA
 	help
 	  OpenFirmware BatteryData accessors
 
+config OF_DMA_DEFAULT_COHERENT
+	# arches should select this if DMA is coherent by default for OF devices
+	bool
+>>>>>>> ba7b9e6d1465... of: Add OF_DMA_DEFAULT_COHERENT & select it on powerpc
+
 endif # OF
