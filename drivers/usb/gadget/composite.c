@@ -578,6 +578,18 @@ static u8 encode_bMaxPower(enum usb_device_speed speed,
 	default:
 		return DIV_ROUND_UP(val, HSUSB_GADGET_VBUS_DRAW_UNITS);
 	}
+
+	if (c->MaxPower)
+		val = c->MaxPower;
+	else
+		val = CONFIG_USB_GADGET_VBUS_DRAW;
+	if (!val)
+		return 0;
+	if (speed < USB_SPEED_SUPER)
+		return DIV_ROUND_UP(val, 2);
+	else
+		return DIV_ROUND_UP(val, 8);
+>>>>>>> f7a3c4736d98... usb: gadget: composite: Fix bMaxPower for SuperSpeedPlus
 }
 
 static int config_buf(struct usb_configuration *config,
