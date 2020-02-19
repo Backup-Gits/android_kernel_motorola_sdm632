@@ -1515,6 +1515,12 @@ struct ext4_sb_info {
 
 	/* Barrier between changing inodes' journal flags and writepages ops. */
 	struct percpu_rw_semaphore s_journal_flag_rwsem;
+
+	/*
+	 * Barrier between writepages ops and changing any inode's JOURNAL_DATA
+	 * or EXTENTS flag.
+	 */
+>>>>>>> eb799e163dc2... ext4: fix race between writepages and enabling EXT4_EXTENTS_FL
 	struct percpu_rw_semaphore s_writepages_rwsem;
 
 	/* Encryption support */
