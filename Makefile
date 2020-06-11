@@ -1,6 +1,6 @@
 VERSION = 4
 PATCHLEVEL = 9
-SUBLEVEL = 226
+SUBLEVEL = 227
 EXTRAVERSION =
 NAME = Roaring Lionus
 
@@ -772,7 +772,7 @@ ifdef CONFIG_CC_WERROR
 KBUILD_CFLAGS	+= -Werror
 endif
 
->>>>>>> ce9f411be7f9... Stop the ad-hoc games with -Wno-maybe-initialized
+#>>>>>>> ce9f411be7f9... Stop the ad-hoc games with -Wno-maybe-initialized
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
 KBUILD_CFLAGS	+= $(call cc-option,-fno-allow-store-data-races)
