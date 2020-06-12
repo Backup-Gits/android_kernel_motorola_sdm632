@@ -22,6 +22,8 @@
 
 #define MAX_MODEL_LEN 16
 
+#define UFS_VENDOR_MICRON      0x12C
+>>>>>>> e42d52cafb1a... scsi: ufs: Add DELAY_BEFORE_LPM quirk for Micron devices
 #define UFS_VENDOR_TOSHIBA     0x198
 #define UFS_VENDOR_SAMSUNG     0x1CE
 #define UFS_VENDOR_SKHYNIX     0x1AD
