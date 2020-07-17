@@ -504,18 +504,12 @@ static int xhci_plat_runtime_resume(struct device *dev)
 
 	struct usb_hcd	*hcd = dev_get_drvdata(dev);
 	struct xhci_hcd	*xhci = hcd_to_xhci(hcd);
-	int ret;
-
-	ret = xhci_resume(xhci, 0);
-	if (ret)
-		return ret;
-
-	pm_runtime_disable(dev);
-	pm_runtime_set_active(dev);
-	pm_runtime_enable(dev);
 
 	return 0;
 >>>>>>> 9e148a5e5e09... usb/xhci-plat: Set PM runtime as active on resume
+
+	return xhci_resume(xhci, 0);
+>>>>>>> 100903943fc4... Revert "usb/xhci-plat: Set PM runtime as active on resume"
 }
 
 static const struct dev_pm_ops xhci_plat_pm_ops = {
