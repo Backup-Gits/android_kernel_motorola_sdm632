@@ -1395,9 +1395,29 @@ static int dwc3_probe(struct platform_device *pdev)
 	if (!dwc->dwc_ipc_log_ctxt)
 		dev_err(dwc->dev, "Error getting ipc_log_ctxt\n");
 
+
 	dwc3_instance[count] = dwc;
 	dwc->index = count;
 	count++;
+
+err5:
+	dwc3_event_buffers_cleanup(dwc);
+
+	usb_phy_shutdown(dwc->usb2_phy);
+	usb_phy_shutdown(dwc->usb3_phy);
+	phy_exit(dwc->usb2_generic_phy);
+	phy_exit(dwc->usb3_generic_phy);
+
+	usb_phy_set_suspend(dwc->usb2_phy, 1);
+	usb_phy_set_suspend(dwc->usb3_phy, 1);
+	phy_power_off(dwc->usb2_generic_phy);
+	phy_power_off(dwc->usb3_generic_phy);
+
+	dwc3_ulpi_exit(dwc);
+
+err4:
+	dwc3_free_scratch_buffers(dwc);
+>>>>>>> 8ac08f568673... usb: dwc3: core: add phy cleanup for probe error handling
 
 	pm_runtime_allow(dev);
 	return 0;
