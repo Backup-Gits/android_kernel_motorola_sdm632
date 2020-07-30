@@ -22,3 +22,7 @@ header-y += vc4_drm.h
 header-y += virtgpu_drm.h
 header-y += sde_drm.h
 header-y += msm_drm_pp.h
+header-y += armada_drm.h
+header-y += etnaviv_drm.h
+header-y += vgem_drm.h
+>>>>>>> d472b7e2f632... install several missing uapi headers
