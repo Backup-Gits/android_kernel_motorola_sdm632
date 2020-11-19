@@ -10050,6 +10050,7 @@ int ufshcd_shutdown(struct ufs_hba *hba)
 		goto out;
 
 	pm_runtime_get_sync(hba->dev);
+
 	ufshcd_hold_all(hba);
 	ufshcd_mark_shutdown_ongoing(hba);
 	ufshcd_shutdown_clkscaling(hba);
@@ -10068,6 +10069,9 @@ int ufshcd_shutdown(struct ufs_hba *hba)
 	/* reqs issued from contexts other than shutdown will fail from now */
 	ufshcd_scsi_unblock_requests(hba);
 	ufshcd_release_all(hba);
+
+
+>>>>>>> 9745eeb6450e... scsi: ufs: Fix race between shutdown and runtime resume flow
 	ret = ufshcd_suspend(hba, UFS_SHUTDOWN_PM);
 out:
 	if (ret)
